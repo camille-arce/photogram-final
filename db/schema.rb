@@ -36,11 +36,11 @@ ActiveRecord::Schema.define(version: 2023_05_01_152928) do
   end
 
   create_table "photos", force: :cascade do |t|
-    t.string "image", null: false
+    t.string "image"
     t.text "caption"
     t.integer "comments_count"
     t.integer "likes_count"
-    t.integer "owner_id", null: false
+    t.integer "owner_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

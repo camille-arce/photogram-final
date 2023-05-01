@@ -13,4 +13,6 @@
 #
 class Photo < ApplicationRecord
   validates(:owner_id, { :presence => true })
+
+  belongs_to(:own_photos, { :class_name => "User", :foreign_key => "owner_id" })
 end

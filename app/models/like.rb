@@ -11,4 +11,7 @@
 class Like < ApplicationRecord
   validates(:fan_id, { :presence => true})
   validates(:photo_id, { :presence => true })
+
+  belongs_to(:fan, { :class_name => "User", :foreign_key => "fan_id"})
+
 end
