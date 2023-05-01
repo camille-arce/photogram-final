@@ -1,15 +1,22 @@
 class UserAuthenticationController < ApplicationController
   # Uncomment line 3 in this file and line 5 in ApplicationController if you want to force users to sign in before any other actions.
-  
+
   #skip_before_action(:force_user_sign_in, { :only => [:sign_up_form, :create, :sign_in_form, :create_cookie] })
 
-  
   def index
     users = User.all
 
     @list_of_users = users.order({ :username => :asc })
-    
+
     render({ :template => "user_authentication/index.html.erb" })
+  end
+
+  def show
+    @username = params.fetch("username")
+
+    @the_user = User.where({ :username => @username }).at(0)
+
+    render({ :template => "user_authentication/show.html.erb" })
   end
 
   def sign_in_form
@@ -18,17 +25,17 @@ class UserAuthenticationController < ApplicationController
 
   def create_cookie
     user = User.where({ :email => params.fetch("query_email") }).first
-    
+
     the_supplied_password = params.fetch("query_password")
-    
+
     if user != nil
       are_they_legit = user.authenticate(the_supplied_password)
-    
+
       if are_they_legit == false
         redirect_to("/user_sign_in", { :alert => "Incorrect password." })
       else
         session[:user_id] = user.id
-      
+
         redirect_to("/", { :notice => "Signed in successfully." })
       end
     else
@@ -60,13 +67,13 @@ class UserAuthenticationController < ApplicationController
 
     if save_status == true
       session[:user_id] = @user.id
-   
-      redirect_to("/", { :notice => "User account created successfully."})
+
+      redirect_to("/", { :notice => "User account created successfully." })
     else
       redirect_to("/user_sign_up", { :alert => @user.errors.full_messages.to_sentence })
     end
   end
-    
+
   def edit_profile_form
     render({ :template => "user_authentication/edit_profile.html.erb" })
   end
@@ -80,21 +87,20 @@ class UserAuthenticationController < ApplicationController
     @user.private = params.fetch("query_private", false)
     @user.comments_count = params.fetch("query_comments_count")
     @user.likes_count = params.fetch("query_likes_count")
-    
+
     if @user.valid?
       @user.save
 
-      redirect_to("/", { :notice => "User account updated successfully."})
+      redirect_to("/", { :notice => "User account updated successfully." })
     else
-      render({ :template => "user_authentication/edit_profile_with_errors.html.erb" , :alert => @user.errors.full_messages.to_sentence })
+      render({ :template => "user_authentication/edit_profile_with_errors.html.erb", :alert => @user.errors.full_messages.to_sentence })
     end
   end
 
   def destroy
     @current_user.destroy
     reset_session
-    
+
     redirect_to("/", { :notice => "User account cancelled" })
   end
- 
 end

@@ -47,7 +47,11 @@
             INSERT FOLLOW REQUEST IF SIGNED IN
         </td>
         <td>
-          <a href="/users/<%= a_user.id %>">
+        <% if @current_user != nil %>
+          <a href="/users/<%= a_user.username %>">
+        <% else %>
+        <a href="/user_sign_in">
+        <% end %>
             Show details
           </a>
         </td>
