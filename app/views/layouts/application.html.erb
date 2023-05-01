@@ -22,7 +22,7 @@
    | <a href="/photos">all public photos</a> |
  
   <% if @current_user != nil %>
-   | <a href="/edit_profile_form"> <%= @current_user.username %> </a> |
+   | <a href="/edit_user_profile"> <%= @current_user.username %> </a> |
    | <a href="/user_sign_out">Sign out</a> |
 
    <% else %>
@@ -32,6 +32,10 @@
 
   <% end %>
   </nav>
+
+  <%= notice %>
+  <%= alert %>
+
     <%= yield %>
   </body>
 </html>
