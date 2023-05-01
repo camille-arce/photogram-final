@@ -30,4 +30,6 @@ class User < ApplicationRecord
 
   has_many(:liked_photos, { :through => :user_likes, :source => :like_to_photos})
 
+  
+
 end

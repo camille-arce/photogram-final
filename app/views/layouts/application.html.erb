@@ -21,9 +21,16 @@
 
    | <a href="/photos">all public photos</a> |
  
-  
-   | <a href="/edit_profile_form"> current user </a> |
-   | <a href="/user_sign_out">all users</a> |
+  <% if @current_user != nil %>
+   | <a href="/edit_profile_form"> <%= @current_user.username %> </a> |
+   | <a href="/user_sign_out">Sign out</a> |
+
+   <% else %>
+
+    | <a href="/user_sign_in"> Sign in </a> |
+    | <a href="/user_sign_up">Sign up</a> |
+
+  <% end %>
   </nav>
     <%= yield %>
   </body>

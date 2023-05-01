@@ -21,6 +21,9 @@
 
         <th>
         </th>
+
+        <th>
+        </th>
       </tr>
 
       <% @list_of_users.each do |a_user| %>
@@ -40,6 +43,9 @@
         </td>
         <% end%>
 
+        <td>
+            INSERT FOLLOW REQUEST IF SIGNED IN
+        </td>
         <td>
           <a href="/users/<%= a_user.id %>">
             Show details
