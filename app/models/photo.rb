@@ -17,7 +17,7 @@ class Photo < ApplicationRecord
 
   #direct associations
   has_many(:photo_comments, { :class_name => "Comment", :foreign_key => "photo_id", :dependent => :destroy} )
-  belongs_to(:poster, { :required => true, :class_name => "User", :foreign_key => "owner_id", :counter_cache => true })
+  belongs_to(:poster, { :required => true, :class_name => "User", :foreign_key => "owner_id"}) # :counter_cache => true })
   has_many(:photo_to_likes, { :class_name => "Like", :foreign_key => "photo_id", :dependent => :destroy })
 
   #indirect associations

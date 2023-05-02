@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   post("/insert_follow_request", { :controller => "follow_requests", :action => "create" })
           
   # READ
-  get("/follow_requests", { :controller => "follow_requests", :action => "index" })
+  get("/follow_requests", { :controller => "user_authentication", :action => "index" })
   
   get("/follow_requests/:path_id", { :controller => "follow_requests", :action => "show" })
   
