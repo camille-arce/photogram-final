@@ -25,7 +25,6 @@ class User < ApplicationRecord
   # Created so that an indirect association from User to Photos can be made - through "user_likes" / :through - should be in the same model as the first table were are coming from
   has_many(:user_likes, { :class_name => "Like", :foreign_key => "fan_id", :dependent => :destroy })
 
-  
   #Indirect associations
   has_many(:following, { :through => :sent_follow_requests, :source => :recipient })
   has_many(:followers, { :through => :received_follow_requests, :source => :sender })
@@ -33,4 +32,7 @@ class User < ApplicationRecord
   #has_many(:feed, { :through => :following, :source => :own_photos })
   #has_many(:activity, { :through => :following, :source => :liked_photos })
 
+  def follow_request_for(other_user)
+    FollowRequest.find_by({ :recipient_id => other_user.id, :sender_id => self.id })
+  end
 end
