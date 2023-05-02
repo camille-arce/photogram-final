@@ -12,28 +12,14 @@
 <hr>
 <div>
   <div>
-    <form action="/insert_photo" method="post">
-      <div>
-        <label for="image_box">
-          Image
-        </label>
+    <form action="/insert_photo" method="post" enctype="multipart/form-data">
+  <label for="browser_input">Image</label>
+  <input id="browser_input" type="file" name="query_image" placeholder="Enter a URL for the image...">
 
-        <input type="text" id="image_box" name="query_image">
-      </div>
+  <label for="browser_caption">Caption</label>
+  <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."></textarea>
 
-      <div>
-        <label for="caption_box">
-          Caption
-        </label>
-
-        <textarea id="caption_box" name="query_caption" rows="3">Enter a caption for the photo</textarea>
-      </div>
-      <button>
-        Add photo
-      </button>
-    </form>
-  </div>
-</div>
+  <button>Add photo</button>
 <% else %>
 <hr>
 <% end %>
