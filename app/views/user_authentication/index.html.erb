@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      List of all Users
+      List of Users
     </h1>
   </div>
 </div>
@@ -43,9 +43,13 @@
         </td>
         <% end%>
 
+
         <td>
+         <% if @current_user != nil %>
+
             INSERT FOLLOW REQUEST IF SIGNED IN
         </td>
+        <% end %>
         <td>
         <% if @current_user != nil %>
           <a href="/users/<%= a_user.username %>">

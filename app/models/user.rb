@@ -28,7 +28,7 @@ class User < ApplicationRecord
   
   #Indirect associations
   has_many(:following, { :through => :sent_follow_requests, :source => :recipient })
-  has_many(:followers { :through => :received_follow_requests, :source => :sender })
+  has_many(:followers, { :through => :received_follow_requests, :source => :sender })
   has_many(:liked_photos, { :through => :user_likes, :source => :like_to_photos })
   #has_many(:feed, { :through => :following, :source => :own_photos })
   #has_many(:activity, { :through => :following, :source => :liked_photos })
