@@ -53,36 +53,33 @@
         </th>
       </tr>
 
+
       <% @list_of_photos.each do |a_photo| %>
-      <tr>
+        <% if a_photo.poster.private == false %>
+          <tr>
+            <td>
+              <img src="<%= a_photo.image %>">
+            </td>
 
-        <td>
-          <img src="<%= a_photo.image %>">
-        </td>
-
-         <td>
-          <%= a_photo.caption %>
-        </td>
+            <td>
+              <%= a_photo.caption %>
+            </td>
 
 
-        <td>
-          <%= a_photo.poster.username %>
-        </td>
+            <td>
+              <%= a_photo.poster.username %>
+            </td>
 
-        <td>
-          <%= time_ago_in_words(a_photo.created_at) %> ago
-        </td>
+            <td>
+              <%= time_ago_in_words(a_photo.created_at) %> ago
+            </td>
 
-          <td>
-          <%= a_photo.photo_to_likes.count %>
-        </td>
-
-        <td>
-          <a href="/photos/<%= a_photo.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
+              <td>
+              <%= a_photo.photo_to_likes.count %>
+            </td>
+              <td> <a href="/photos/<%= a_photo.id %>">Show details</a> </td>
+          </tr>
+        <% end %>
       <% end %>
     </table>
   </div>

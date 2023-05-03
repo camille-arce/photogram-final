@@ -73,16 +73,44 @@
 </div>
 
 <hr>
-<dt>Edit photo</dt>
-<dd>
-    <form action="/modify_photo/<%= @the_photo.id %>" method="post" enctype="multipart/form-data">
-      <label for="browser_image">Image URL</label>
-      <input id="browser_image" type="file" name="query_image" placeholder="Enter a URL for the image..." value="<%- @the_photo.image %>">
-    
-      <label for="browser_caption">Caption</label>
-      <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption %> </textarea>
-    
-      <button>Update photo</button>
-    </form>
-  </dd>
+<% if @current_user == @the_photo.poster %>
+  <dt>Edit photo</dt>
+  <dd>
+      <form action="/modify_photo/<%= @the_photo.id %>" method="post" enctype="multipart/form-data">
+        <label for="browser_image">Image URL</label>
+        <input id="browser_image" type="file" name="query_image" placeholder="Enter a URL for the image..." value="<%- @the_photo.image %>">
+      
+        <label for="browser_caption">Caption</label>
+        <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption %> </textarea>
+      
+        <button>Update photo</button>
+      </form>
+    </dd>
+<% end %>
 <hr>
+<h2>Comments</h2>
+<table border="1">
+  <tr>
+      <th>Commenter</th>
+      <th>Comment</th>
+      <th>Posted</th>
+  </tr>
+  <% @the_photo.photo_comments.order({ :created_at => :desc}).each do |a_comment| %>
+  <tr>
+      <td><%= a_comment.commenter.username %></td>
+      <td><%= a_comment.body %></td>
+      <td><%= time_ago_in_words(a_comment.created_at) %> ago </td>
+  </tr>
+  <% end %>
+</table>
+
+<h3>Add a new comment</h3>
+
+<form action="/insert_comment" method="post">
+  <input type="hidden" value="<%= @the_photo.id %>" name="query_photo_id">
+  
+  <label for="browser_comment">Comment</label>
+  <textarea id="browser_comment" name="query_body" placeholder="Enter a comment..."></textarea>
+
+  <button>Add comment</button>
+</form>
