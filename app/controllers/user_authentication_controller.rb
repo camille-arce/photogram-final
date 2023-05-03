@@ -15,7 +15,11 @@ class UserAuthenticationController < ApplicationController
     @username = params.fetch("username")
     @the_user = User.where({ :username => @username }).at(0)
 
-    render({ :template => "user_authentication/show.html.erb" })
+    if @current_user != nil
+      render({ :template => "user_authentication/show.html.erb" })
+    else
+      redirect_to("/user_sign_in", { :notice => "You are not authorized to do that." })
+    end
   end
 
   def sign_in_form
