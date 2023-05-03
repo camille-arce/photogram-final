@@ -81,9 +81,12 @@ Rails.application.routes.draw do
   get("/users", { :controller => "user_authentication", :action => "index" })
   
   get("/users/:username", { :controller => "user_authentication", :action => "show" })
+  get("/users/:username/liked_photos", { :controller => "user_authentication", :action => "liked_photos" })
+  get("/users/:username/feed", { :controller => "user_authentication", :action => "feed" })
+  get("/users/:username/discover", { :controller => "user_authentication", :action => "discover" })
 
 
-  # SIGN UP FORM
+  # SIGN UP FORMbin
   get("/user_sign_up", { :controller => "user_authentication", :action => "sign_up_form" })        
   # CREATE RECORD
   post("/insert_user", { :controller => "user_authentication", :action => "create"  })

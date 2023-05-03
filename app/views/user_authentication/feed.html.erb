@@ -1,0 +1,92 @@
+<h1> <%= @the_user.username %> </h1>
+
+<dl>
+  <dt>Private</dt>
+  <dd> <%= @the_user.private %> </dd>
+  <dt>Followers</dt>
+
+  <dd><%= @the_user.followers.count %></dd>
+  <% if @current_user != @the_user %>
+    <% if @current_user.following.include?(@the_user) %>
+      <a href="/delete_follow_request/<%=%>">Unfollow</a>
+    <% else %>
+    <form action="/insert_follow_request" method="post">
+      <input type="hidden" name="query_recipient_id" value="<%= @the_user.id %>">
+      <button>Follow</button>
+    </form>
+    <% end %>
+  <% end %>
+  <% if @current_user == @the_user %>
+  <h4>Pending follow requests</h4>
+    <% @current_user.received_follow_requests.each do |a_follow_request| %>
+      <% if a_follow_request.status == "pending" %>
+      <dd>
+        <ul>
+          <li>
+              <%= User.where({ :id => a_follow_request.sender_id }).at(0).username %>
+              <form action="/modify_follow_request/<%= a_follow_request.id %>" method="post">
+                <input name="query_status" value="accepted" type="hidden">
+                <button>Accept</button>
+              </form>
+
+              <form action="/modify_follow_request/<%= a_follow_request.id %>" method="post">
+                <input name="query_status" value="rejected" type="hidden">
+                <button>Reject</button>
+              </form>
+          </li>
+        </ul>
+      </dd>
+    <% end %>
+  <% end %>
+<% end %>
+  <dt>Following</dt>
+  <dd><%= @the_user.following.count %> </dd>
+  <% if @current_user == @the_user %>
+    <dt>Edit user</dt>
+      <dd>
+        <form action="/modify_user" method="post">
+          <label for="browser_username">Username</label>
+          <input id="browser_username" type="text" name="query_username" placeholder="Enter a username..." value="<%= @current_user.username %>">
+
+          <label for="browser_private">Private?</label>
+          <input id="browser_private" type="checkbox" name="query_private" checked="">
+
+          <input name="query_email" value="<%= @current_user.email %>" type="hidden">
+          <input name="query_password" value="<%= @current_user.password %>" type="hidden">
+          <input name="query_password_confirmation" value="<%= @current_user.password_confirmation %>" type="hidden">
+          <input name="query_comments_count" value="<%= @current_user.comments_count %>" type="hidden">
+          <input name="query_likes_count" value="<%= @current_user.likes_count %>" type="hidden">
+
+          <button>Update user</button>
+        </form>
+      </dd>
+  <% end %>
+</dl>
+<nav>
+  <ul>
+    <li><a href="/users/<%= @the_user.username %>">Profile</a></li>
+    <li><a href="/users/<%= @the_user.username %>/liked_photos">Liked photos</a></li>
+    <li><a href="/users/<%= @the_user.username %>/feed">Feed</a></li>
+    <li><a href="/users/<%= @the_user.username %>/discover">Discover</a></li>
+  </ul>
+</nav>
+<h2>Feed (<%= @the_user.feed.count%>)</h2>
+<table border="1">
+  <tr>
+    <th>Image</th>
+    <th>Owner</th>
+    <th>Caption</th>
+    <th>Posted</th>
+    <th>Likes</th>
+    <th></th>
+  </tr>
+  <% @the_user.feed.each do |a_photo| %>
+    <tr>
+      <th><img src="<%= a_photo.image %>"></th>
+      <th><%= a_photo.poster.username %></th>
+      <th><%= a_photo.caption %></th>
+      <th><%= time_ago_in_words(a_photo.created_at) %> ago</th>
+      <th><%= a_photo.likes_count %></th>
+      <th></th>
+    </tr>
+  <% end%>
