@@ -17,7 +17,7 @@ class PhotosController < ApplicationController
     if @current_user != nil
     render({ :template => "photos/show.html.erb" })
     else
-    redirect_to("/user_sign_in")
+    redirect_to("/user_sign_in", alert: "You have to sign in first.")
     end
   end
 

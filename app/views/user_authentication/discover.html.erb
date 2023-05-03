@@ -70,7 +70,7 @@
     <li><a href="/users/<%= @the_user.username %>/discover">Discover</a></li>
   </ul>
 </nav>
-<h2>Own photos (<%= @the_user.own_photos.count%>)</h2>
+<h2>Feed (<%= @the_user.feed.count%>)</h2>
 <table border="1">
   <tr>
     <th>Image</th>
@@ -80,13 +80,13 @@
     <th>Likes</th>
     <th></th>
   </tr>
-  <% @the_user.own_photos.each do |a_photo| %>
-   <tr>
-    <td><img src="<%= a_photo.image %>"></td>
-    <td><%= a_photo.poster.username %></td>
-    <td><%= a_photo.caption %></td>
-    <td><%= time_ago_in_words(a_photo.created_at) %> ago</td>
-    <td><%= a_photo.likes_count %></td>
-    <td><a href="/photos/<%= a_photo.id %>">Show Details</a></td>
-  </tr>
+  <% @the_user.activity.each do |a_photo| %>
+    <tr>
+      <th><img src="<%= a_photo.image %>"></th>
+      <th><%= a_photo.poster.username %></th>
+      <th><%= a_photo.caption %></th>
+      <th><%= time_ago_in_words(a_photo.created_at) %> ago</th>
+      <th><%= a_photo.likes_count %></th>
+      <th></th>
+    </tr>
   <% end%>

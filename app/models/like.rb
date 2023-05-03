@@ -11,7 +11,7 @@
 class Like < ApplicationRecord
   validates(:fan_id, { :presence => true})
   validates(:photo_id, { :presence => true })
-  validates(:photo_id, { :uniqueness => { :scope => ["user_id"], :message => "already liked" } })
+  validates(:photo_id, { :uniqueness => { :scope => ["fan_id"], :message => "already liked" } })
 
   #Direct associations
   belongs_to(:like_to_photos, { :class_name => "Photo", :foreign_key => "photo_id", :counter_cache => true })

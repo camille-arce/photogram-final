@@ -1,54 +1,22 @@
 <div>
   <div>
-    <h1>
-      Photo details
-    </h1>
-
+    <h1>Photo details</h1>
     <dl>
-      <dt>
-        Image
-      </dt>
-      <dd>
-        <img src="<%= @the_photo.image %>">
-      </dd>
-      <dt>
-        Caption
-      </dt>
-      <dd>
-        <%= @the_photo.caption %>
-      </dd>
-
-       <dt>
-        Owner
-      </dt>
-      <dd>
-        <%= @the_photo.poster.username %>
-      </dd>
-
-      <dt>
-        Comments count
-      </dt>
-      <dd>
-        <%= @the_photo.comments_count %>
-      </dd>
-
-      <dt>
-        Likes count
-      </dt>
-      <dd>
-        <%= @the_photo.likes_count %>
-      </dd>
-
-      <dt>
-        Posted
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_photo.created_at) %> ago
-      </dd>
-
-      <dt>
-        Add a fan
-      </dt>
+      <dt>Image</dt>
+      <dd><img src="<%= @the_photo.image %>"></dd>
+      <dt>Caption</dt>
+      <dd><%= @the_photo.caption %></dd>
+       <dt>Owner</dt>
+      <dd><%= @the_photo.poster.username %></dd>
+       <dt>Posted</dt>
+      <dd><%= time_ago_in_words(@the_photo.created_at) %> ago</dd>
+      <dt>Comments count</dt>
+      <dd><%= @the_photo.comments_count %></dd>
+      <dt>Likes count</dt>
+      <dd><%= @the_photo.likes_count %></dd>
+      <dt>Fans</dt>
+      <dd><% @the_photo.fans %></dd>
+      <dt>Add a fan</dt>
       <% if @the_photo.fans.include?(@current_user) %>
       <dd>
         <a href="/delete_like/<%= @the_photo.photo_to_likes.at(0).id %>">Unlike</a>

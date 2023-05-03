@@ -33,7 +33,7 @@ class User < ApplicationRecord
   has_many(:liked_photos, { :through => :user_likes, :source => :like_to_photos })
 
   has_many(:feed, { :through => :following, :source => :own_photos })
-  #has_many(:activity, { :through => :following, :source => :liked_photos })
+  has_many(:activity, { :through => :following, :source => :liked_photos })
 
   def follow_request_for(other_user)
     FollowRequest.find_by({ :recipient_id => other_user.id, :sender_id => self.id })
