@@ -6,9 +6,7 @@ class UserAuthenticationController < ApplicationController
     users = User.all
     @list_of_users = users.order({ :username => :asc })
 
-
     render({ :template => "user_authentication/index.html.erb"})
-
   end
 
   def show
@@ -20,6 +18,19 @@ class UserAuthenticationController < ApplicationController
     else
       redirect_to("/user_sign_in", { :notice => "You are not authorized to do that." })
     end
+  end
+
+  def liked_photos
+    @username = params.fetch("username")
+    @the_user = User.where({ :username => @username }).at(0)
+
+    render({ :template => "user_authentication/liked_photos.html.erb" })
+  end
+  def feed
+    @username = params.fetch("username")
+    @the_user = User.where({ :username => @username }).at(0)
+
+    render({ :template => "user_authentication/feed.html.erb" })
   end
 
   def sign_in_form
