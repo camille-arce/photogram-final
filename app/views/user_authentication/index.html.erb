@@ -33,12 +33,21 @@
           <td>
             <%= render "follow_form", { :user => a_user } %>
           </td>
+          
+      
+          <% if @current_user.present? %>
           <td>
-              <!--- TODO: add another if statement if the person follows // if not say "you are not authorized to do tht -->
-              <a href="/users/<%= a_user.username %>">
-                Show details
-              </a>
+            <% if a_user.private == false %>
+            <a href="/users/<%= a_user.username %>">Show details</a>
+            <% elsif a_user.followers.include?(@current_user) %>
+            <a href="/users/<%= a_user.username %>">Show details</a>
+            <% else %>
+            <a href="/users">Show details</a>
+            <% end %>
           </td>
+          <% else %>
+          <td> <a href="/user_sign_in">Show details</a> </td>
+          <% end %>
       </tr>
       <% end %>
     </table>

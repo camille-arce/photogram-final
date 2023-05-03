@@ -4,15 +4,15 @@ class UserAuthenticationController < ApplicationController
 
   def index
     users = User.all
-
     @list_of_users = users.order({ :username => :asc })
 
-    render({ :template => "user_authentication/index.html.erb" })
+
+    render({ :template => "user_authentication/index.html.erb"})
+
   end
 
   def show
     @username = params.fetch("username")
-
     @the_user = User.where({ :username => @username }).at(0)
 
     render({ :template => "user_authentication/show.html.erb" })
