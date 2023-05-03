@@ -4,15 +4,59 @@
   <dt>Private</dt>
   <dd> <%= @the_user.private %> </dd>
 
+<dl>
+  <dt>Private</dt>
+  <dd>true</dd>
+
   <dt>Followers</dt>
   <dd>
-    INSERT FOLLOWER COUNT
+    <%= @the_user.followers.count %>
 
-      <div>
-         <!--  <a href="/delete_follow_request/<%= %>"> -->
-            Unfollow link here
-          </a>
-    </div>
+  <h4>Pending follow requests</h4>
+  <% if @current_user == @the_user %>
+    <% @current_user.received_follow_requests.each do |a_follow_request| %>
+  <dd>
+    <ul>
+      <li>
+          <%= User.where({ :id => a_follow_request.sender_id }).at(0).username %>
+
+          <form action="/modify_follow_request/<%= a_follow_request.id %>" method="post">
+            <input name="query_status" value="accepted" type="hidden">
+
+            <button>
+              Accept
+            </button>
+          </form>
+
+          <form action="/modify_follow_request/<%= a_follow_request.id %>" method="post">
+            <input name="query_status" value="rejected" type="hidden">
+          
+            <button>
+              Reject
+            </button>
+          </form>
+      </li>
+    </ul>
+  </dd>
+    <% end %>
+  <% end %>
+
+  <dt>Following</dt>
+  <dd><%= @the_user.following.count %> </dd>
+
+  <dt>Edit user</dt>
+  <dd>
+    <form action="/modify_user/91" method="post">
+      <label for="browser_username">Username</label>
+      <input id="browser_username" type="text" name="query_username" placeholder="Enter a username..." value="alice">
+
+      <label for="browser_private">Private?</label>
+      <input id="browser_private" type="checkbox" name="query_private" checked="">
+
+      <button>Update user</button>
+    </form>
+  </dd>
+</dl>
 
   </dd>
 
